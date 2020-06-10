@@ -1,51 +1,35 @@
 package lv.proofit.domain.policyObject;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lv.proofit.domain.policySubObject.PolicySubObject;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter
+@EqualsAndHashCode
+@ToString
+@Component
 
 public class PolicyObject {
 
+    @Setter
     private String name;
-    private List<PolicySubObject> subObjects;
+    private Set<PolicySubObject> subObjects = new HashSet<>();
 
-    public String getName() {
-        return name;
+    public PolicySubObject addSubObject(PolicySubObject policySubObject){
+        subObjects.add(policySubObject);
+        return policySubObject;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public PolicySubObject removeSubObject(PolicySubObject policySubObject){
+        subObjects.remove(policySubObject);
+        return policySubObject;
     }
 
-    public List<PolicySubObject> getSubObjects() {
-        return subObjects;
-    }
-
-    public void setSubObjects(List<PolicySubObject> subObjects) {
-        this.subObjects = subObjects;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PolicyObject)) return false;
-        PolicyObject that = (PolicyObject) o;
-        return Objects.equals(getName(), that.getName()) &&
-                Objects.equals(getSubObjects(), that.getSubObjects());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getSubObjects());
-    }
-
-    @Override
-    public String toString() {
-        return "PolicyObject{" +
-                "name='" + name + '\'' +
-                ", subObjects=" + subObjects +
-                '}';
-    }
 }
 

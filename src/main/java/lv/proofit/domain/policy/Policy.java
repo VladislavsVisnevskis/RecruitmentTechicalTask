@@ -1,61 +1,36 @@
 package lv.proofit.domain.policy;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lv.proofit.domain.policyObject.PolicyObject;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+@Getter
+@EqualsAndHashCode
+@ToString
+@Component
 
 public class Policy {
 
+    @Setter
     private String policyNumber;
+    @Setter
     private PolicyStatus status;
-    private List<PolicyObject> policyObjects;
+    private List<PolicyObject> policyObjectList = new ArrayList<>();
 
-    public String getPolicyNumber() {
-        return policyNumber;
+    public PolicyObject addPolicyObject( PolicyObject policyObject){
+        policyObjectList.add(policyObject);
+        return policyObject;
     }
 
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
+    public PolicyObject removePolicyObject( PolicyObject policyObject){
+        policyObjectList.remove(policyObject);
+        return policyObject;
     }
 
-    public PolicyStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(PolicyStatus status) {
-        this.status = status;
-    }
-
-    public List<PolicyObject> getPolicyObjects() {
-        return policyObjects;
-    }
-
-    public void setPolicyObjects(List<PolicyObject> policyObjects) {
-        this.policyObjects = policyObjects;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Policy)) return false;
-        Policy policy = (Policy) o;
-        return Objects.equals(getPolicyNumber(), policy.getPolicyNumber()) &&
-                getStatus() == policy.getStatus() &&
-                Objects.equals(getPolicyObjects(), policy.getPolicyObjects());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPolicyNumber(), getStatus(), getPolicyObjects());
-    }
-
-    @Override
-    public String toString() {
-        return "Policy{" +
-                "policyNumber='" + policyNumber + '\'' +
-                ", status=" + status +
-                ", policyObjects=" + policyObjects +
-                '}';
-    }
 }
